@@ -26,12 +26,14 @@ function App() {
         <div>
             <div className="aura" />
             <div className="flex justify-center h-auto overflow-y-auto aura">
-                <div className="flex flex-col items-center max-w-[350px] py-12 gap-16 relative">
+                <div className="flex flex-col items-center max-w-[350px] py-12 gap-16 relative ">
                     <Header
                         content={{
-                            title: "สุขสันต์วันเกิด",
-                            subtitle: "Naming🎉",
+                            title: "Happy Anniversary",
+                            subtitle: "1460 Days",
                         }}
+
+                        
                     />
                     <div className="w-[245px] h-[320px] rounded-lg shadow-lg mb-12">
                         <img

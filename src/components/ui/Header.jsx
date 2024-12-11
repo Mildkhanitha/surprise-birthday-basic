@@ -8,7 +8,7 @@ const Header = memo(({ content: { title, subtitle } }) => (
         transition={{ duration: 2 }}
         className="text-[#44a7f2]"
     >
-        <h1 className="text-8xl font-medium w-[350px] text-wrap font-['Kanit']">
+        <h1 className="text-4xl font-bold w-[350px] text-wrap font-['Kanit'] text-center">
             {title}
         </h1>
         <h1 className="text-6xl font-bold w-[350px] text-wrap font-['Kanit'] text-center">
