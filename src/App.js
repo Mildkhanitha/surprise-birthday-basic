@@ -22,17 +22,24 @@ function App() {
         amount: 0.2,
     });
 
-    // State และ Ref สำหรับ Audio Player
-    const [isPlaying, setIsPlaying] = useState(false);
+    // เพลงทั้งหมดในระบบ
+    const songs = [
+        { title: "คณะขวัญใจ - น่ารักชุบแป้งทอด", src: "/music/song1.mp3" },
+        { title: "Song 2", src: "/music/song2.mp3" },
+        { title: "Song 3", src: "/music/song3.mp3" },
+    ];
+
+    // State สำหรับเพลงที่กำลังเล่น
+    const [currentSong, setCurrentSong] = useState(songs[0]);
     const audioRef = useRef(null);
 
-    const toggleAudio = () => {
-        if (audioRef.current.paused) {
-            audioRef.current.play();
-            setIsPlaying(true);
-        } else {
+    // ฟังก์ชันเล่นเพลง
+    const playSong = (song) => {
+        setCurrentSong(song);
+        if (audioRef.current) {
             audioRef.current.pause();
-            setIsPlaying(false);
+            audioRef.current.load();
+            audioRef.current.play();
         }
     };
 
@@ -41,15 +48,12 @@ function App() {
             <div className="aura" />
             <div className="flex justify-center h-auto overflow-y-auto aura">
                 <div className="flex flex-col items-center max-w-[350px] py-12 gap-16 relative ">
-                    {/* Header */}
                     <Header
                         content={{
                             title: "Happy Anniversary",
                             subtitle: "1460 Days",
                         }}
                     />
-
-                    {/* Album */}
                     <div className="w-[245px] h-[320px] rounded-lg shadow-lg mb-12">
                         <img
                             src={_albums}
@@ -60,43 +64,46 @@ function App() {
                         />
                     </div>
 
-                    {/* Message Section */}
+                    {/* ส่วนจัดการเพลง */}
+                    <div className="music-section w-full flex flex-col items-center gap-4 mt-6 bg-white p-4 rounded-lg shadow-md">
+                        <h3 className="text-xl font-bold text-gray-700">
+                            🎵 Select Your Song
+                        </h3>
+                        <ul className="w-full">
+                            {songs.map((song, index) => (
+                                <li
+                                    key={index}
+                                    className="cursor-pointer p-2 text-gray-800 hover:bg-gray-200 rounded-md"
+                                    onClick={() => playSong(song)}
+                                >
+                                    {song.title}
+                                </li>
+                            ))}
+                        </ul>
+                        <audio
+                            ref={audioRef}
+                            src={currentSong.src}
+                            controls
+                            className="w-full mt-4"
+                        />
+                    </div>
+
                     <MessageSection
                         data={_messages}
                         ref={messageRef}
                         isInView={isInViewMessageRef}
                     />
-
-                    {/* Audio Player */}
-                    <div className="mt-4 bg-white shadow-lg rounded-lg p-4 w-[300px] flex flex-col items-center text-center">
-                        <h3 className="text-lg font-semibold text-pink-600">
-                            เพลง: Your Special Song
-                        </h3>
-                        <audio ref={audioRef} src="/music/song.mp3" className="hidden" />
-                        <button
-                            onClick={toggleAudio}
-                            className={`mt-4 px-6 py-2 rounded-full font-medium ${
-                                isPlaying ? "bg-red-500 text-white" : "bg-green-500 text-white"
-                            } hover:opacity-90`}
-                        >
-                            {isPlaying ? "Pause Music" : "Play Music"}
-                        </button>
-                    </div>
-
-                    {/* Memory Zone */}
                     <MemoryZone
                         ref={memoryZoneRef}
                         isInView={isInViewMemoryZoneRef}
                         data={_birthdayMessages}
                     />
-
                     <div className={`pb-20 font-bold text-[#f78da4] text-3xl`}>
                         Captions 💕
                     </div>
                 </div>
             </div>
 
-            {/* Modal */}
             {isModalVisible && (
                 <div className="modal show" onClick={closeModal}>
                     <div className="modal-content">
