@@ -2,14 +2,16 @@ import { _birthdayMessages, _messages } from "../src/assets/mock/mock";
 
 import { useRef, useState } from "react";
 import { useInView } from "framer-motion";
-import { _albums } from "./assets/mock/mock";
-import { useModal } from "./hooks/useModal";
 import { Header, MessageSection } from "./components/ui";
 import { MemoryZone } from "./components/common";
 
-function App() {
-    const { isModalVisible, currentImage, openModal, closeModal } = useModal();
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Navigation, Pagination } from "swiper/modules";
 
+function App() {
     const messageRef = useRef(null);
     const memoryZoneRef = useRef(null);
 
@@ -22,24 +24,25 @@ function App() {
         amount: 0.2,
     });
 
-    // เพลงทั้งหมดในระบบ
     const songs = [
-        { title: "คณะขวัญใจ - น่ารักชุบแป้งทอด", src: "/music/song1.mp3" },
-        { title: "Song 2", src: "/music/song2.mp3" },
-        { title: "Song 3", src: "/music/song3.mp3" },
+        { title: "คณะขวัญใจ - น่ารักชุบแป้งทอด", src: "/music/song1.mp3", caption: "เค้าจีบเธอด้วยเพลงนี้ ยังจำได้ไหม" },
+        { title: "โอปอ กิตฐิพงษ์ - ซึ่งแตกต่าง", src: "/music/song2.mp3", caption: "สมัยมีสาวเเอบชอบมาฟังเพลงตาม" },
     ];
 
-    // State สำหรับเพลงที่กำลังเล่น
     const [currentSong, setCurrentSong] = useState(songs[0]);
     const audioRef = useRef(null);
 
-    // ฟังก์ชันเล่นเพลง
-    const playSong = (song) => {
+    const playSong = async(song) => {
         setCurrentSong(song);
         if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.load();
-            audioRef.current.play();
+            try {
+                audioRef.current.pause(); // หยุดเพลงที่กำลังเล่นอยู่
+                audioRef.current.src = song.src; // ตั้งค่าเพลงใหม่
+                await audioRef.current.load(); // รอให้ไฟล์โหลดเสร็จ
+                await audioRef.current.play(); // เริ่มเล่นเพลงใหม่
+            } catch (error) {
+                console.error("Error playing the audio:", error);
+            }
         }
     };
 
@@ -54,17 +57,90 @@ function App() {
                             subtitle: "1460 Days",
                         }}
                     />
-                    <div className="w-[245px] h-[320px] rounded-lg shadow-lg mb-12">
-                        <img
-                            src={_albums}
-                            alt={`image_${_albums}`}
-                            onClick={() => openModal(_albums)}
-                            loading="lazy"
-                            className="border-none bg-[#a7e6f76b] rounded-lg cursor-pointer"
-                        />
+
+                    <div className="carousel-section w-full bg-white p-4 rounded-lg shadow-md mt-6">
+                        <h3 className="text-xl font-bold text-gray-700 mb-4">
+                            📸 Memories
+                        </h3>
+                        <Swiper
+                            navigation={true}
+                            pagination={{ clickable: true }}
+                            modules={[Navigation, Pagination]}
+                            className="mySwiper"
+                        >
+                            <SwiperSlide>
+                                <img
+                                    src="/images/photo1.jpg"
+                                    alt="Memory 1"
+                                    className="rounded-lg w-full"
+                                />
+                                <p className="text-center mt-2 text-gray-600">
+                                    อันนี้ตอนอยู่มหาลัย ภาพนี้น่ารักดี บอกว่าจะไม่ดู สุดท้ายก็ดูจนงานจบ 5555
+                                </p>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img
+                                    src="/images/photo2.jpg"
+                                    alt="Memory 2"
+                                    className="rounded-lg w-full"
+                                />
+                                <p className="text-center mt-2 text-gray-600">
+                                    อันนี้ก็ช่วงเเรกตอนปฐมนิเทศ มีเป็นเฟรชชี่น้องใหม่
+                                </p>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img
+                                    src="/images/photo3.jpg"
+                                    alt="Memory 3"
+                                    className="rounded-lg w-full"
+                                />
+                                <p className="text-center mt-2 text-gray-600">
+                                    ตอนมาร์กหน้าด้วยกันครั้งเเรก น่ารักดีเลยใส่มา
+                                </p>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img
+                                    src="/images/photo4.jpg"
+                                    alt="Memory 4"
+                                    className="rounded-lg w-full"
+                                />
+                                <p className="text-center mt-2 text-gray-600">
+                                    ตอนไปเที่ยว ๆ ด้วยกัน อยู่ด้วยกันมานานเนอะ
+                                </p>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <img
+                                    src="/images/photo5.jpg"
+                                    alt="Memory 5"
+                                    className="rounded-lg w-full"
+                                />
+                                <p className="text-center mt-2 text-gray-600">
+                                    เติบโตด้วยกันมาเรื่อย ๆ เลย ตั้งเเต่ปวช.ตอนนี้มหาลัย เค้ารักเธอจัง
+                                </p>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <video
+                                    controls
+                                    className="rounded-lg w-full"
+                                    src="/videos/video1.mp4"
+                                />
+                                <p className="text-center mt-4 text-gray-600">
+                                    อยู่กันเธอเค้ามีความสุขมากเลย ได้เที่ยว ๆ กินเบิ้มๆ
+                                </p>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <video
+                                    controls
+                                    className="rounded-lg w-full"
+                                    src="/videos/video2.mp4"
+                                />
+                                <p className="text-center mt-4 text-gray-600">
+                                    อยู่ด้วยกันเเบบนี้ไปนาน ๆ นะ รักนะคะ
+                                </p>
+                            </SwiperSlide>
+                        </Swiper>
                     </div>
 
-                    {/* ส่วนจัดการเพลง */}
                     <div className="music-section w-full flex flex-col items-center gap-4 mt-6 bg-white p-4 rounded-lg shadow-md">
                         <h3 className="text-xl font-bold text-gray-700">
                             🎵 Select Your Song
@@ -86,6 +162,11 @@ function App() {
                             controls
                             className="w-full mt-4"
                         />
+                        {currentSong.caption && (
+                            <div className="mt-2 text-sm text-gray-500 italic">
+                                {currentSong.caption}
+                            </div>
+                        )}
                     </div>
 
                     <MessageSection
@@ -103,20 +184,6 @@ function App() {
                     </div>
                 </div>
             </div>
-
-            {isModalVisible && (
-                <div className="modal show" onClick={closeModal}>
-                    <div className="modal-content">
-                        {currentImage && (
-                            <img
-                                src={currentImage}
-                                alt="Preview"
-                                className="modal-image"
-                            />
-                        )}
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
