@@ -7,18 +7,41 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Pagination } from "swiper/modules";
+import './App.css';
 
 function App() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [passwordFields, setPasswordFields] = useState(['', '', '', '']); // Hook ที่เพิ่มมา
+
+    const handleInputChange = (value, index) => {
+        const newFields = [...passwordFields];
+        if (value.length <= 1) {
+            newFields[index] = value;
+            setPasswordFields(newFields);
+
+            // ย้ายไปช่องถัดไปถ้าใส่ตัวเลขแล้ว
+            if (value && index < 3) {
+                document.getElementById(`field-${index + 1}`).focus();
+            }
+        }
+    };
+    const handlePasswordSubmit = () => {
+        const enteredPassword = passwordFields.join('');
+        if (enteredPassword === '2212') {
+            setIsAuthenticated(true);
+        } else {
+            alert('รหัสผ่านไม่ถูกต้อง');
+        }
+    };
     const messageRef = useRef(null);
     const isInViewMessageRef = useInView(messageRef, {
-        once: true,
+        triggerOnce: true,
         amount: 0.2,
     });
-    
 
     const songs = [
-        { title: "คณะขวัญใจ - น่ารักชุบแป้งทอด", src: "/public/music/song1.mp3", caption: "เค้าจีบเธอด้วยเพลงนี้ ยังจำได้ไหม" },
-        { title: "โอปอ กิตฐิพงษ์ - ซึ่งแตกต่าง", src: "/music/song2.mp3", caption: "สมัยมีสาวเเอบชอบมาฟังเพลงตาม" },
+        { title: "คณะขวัญใจ - น่ารักชุบแป้งทอด", src: process.env.PUBLIC_URL +"/music/song1.mp3", caption: "เค้าจีบเธอด้วยเพลงนี้ ยังจำได้ไหม" },
+        { title: "โอปอ กิตฐิพงษ์ - ซึ่งแตกต่าง", src: process.env.PUBLIC_URL +"/music/song2.mp3", caption: "สมัยมีสาวเเอบชอบมาฟังเพลงตาม" },
     ];
 
     const [currentSong, setCurrentSong] = useState(songs[0]);
@@ -37,6 +60,41 @@ function App() {
             }
         }
     };
+    if (!isAuthenticated) {
+        return (
+            <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-blue-100 to-blue-300">
+                <div className="bg-white shadow-md rounded-lg p-6 w-80 text-center">
+                    <h2 className="mb-4 text-2xl font-semibold text-gray-700">
+                        🎉 Memory Zone
+                    </h2>
+                    <p className="mb-4 text-gray-600">
+                        ใส่รหัสผ่าน 4 หลัก
+                    </p>
+                    <div className="flex justify-center gap-4 mb-4">
+                        {passwordFields.map((value, index) => (
+                            <input
+                                key={index}
+                                id={`field-${index}`}
+                                type="text"
+                                value={value}
+                                onChange={(e) => handleInputChange(e.target.value, index)}
+                                maxLength="1"
+                                className="w-12 h-12 text-center border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        ))}
+                    </div>
+                    <button
+                        onClick={handlePasswordSubmit}
+                        className="mt-4 w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition-colors"
+                    >
+                        ยืนยัน
+                    </button>
+                </div>
+            </div>
+        );
+    }
+    
+    
 
     return (
         <div>
@@ -62,7 +120,7 @@ function App() {
                         >
                             <SwiperSlide>
                                 <img
-                                    src= "/images/photo1.jpg"
+                                    src={process.env.PUBLIC_URL + "/images/photo1.jpg"}
                                     alt="Memory 1"
                                     className="rounded-lg w-full"
                                 />
@@ -72,7 +130,7 @@ function App() {
                             </SwiperSlide>
                             <SwiperSlide>
                                 <img
-                                    src="/images/photo2.jpg"
+                                    src={process.env.PUBLIC_URL + "/images/photo2.jpg"}
                                     alt="Memory 2"
                                     className="rounded-lg w-full"
                                 />
@@ -82,7 +140,7 @@ function App() {
                             </SwiperSlide>
                             <SwiperSlide>
                                 <img
-                                    src="/images/photo3.jpg"
+                                    src={process.env.PUBLIC_URL + "/images/photo3.jpg"}
                                     alt="Memory 3"
                                     className="rounded-lg w-full"
                                 />
@@ -92,7 +150,7 @@ function App() {
                             </SwiperSlide>
                             <SwiperSlide>
                                 <img
-                                    src="/images/photo4.jpg"
+                                    src={process.env.PUBLIC_URL + "/images/photo4.jpg"}
                                     alt="Memory 4"
                                     className="rounded-lg w-full"
                                 />
@@ -102,7 +160,7 @@ function App() {
                             </SwiperSlide>
                             <SwiperSlide>
                                 <img
-                                    src="/images/photo5.jpg"
+                                    src={process.env.PUBLIC_URL + "/images/photo5.jpg"}
                                     alt="Memory 5"
                                     className="rounded-lg w-full"
                                 />
@@ -114,7 +172,7 @@ function App() {
                                 <video
                                     controls
                                     className="rounded-lg w-full"
-                                    src="/videos/video1.mp4"
+                                    src={process.env.PUBLIC_URL + "/videos/video1.mp4"}
                                 />
                                 <p className="text-center mt-4 text-gray-600">
                                     อยู่กันเธอเค้ามีความสุขมากเลย ได้เที่ยว ๆ กินเบิ้มๆ
@@ -124,7 +182,7 @@ function App() {
                                 <video
                                     controls
                                     className="rounded-lg w-full"
-                                    src="/videos/video2.mp4"
+                                    src={process.env.PUBLIC_URL + "/videos/video2.mp4"}
                                 />
                                 <p className="text-center mt-4 text-gray-600">
                                     อยู่ด้วยกันเเบบนี้ไปนาน ๆ นะ รักนะคะ
@@ -158,9 +216,10 @@ function App() {
                             <div className="mt-2 text-sm text-gray-500 italic">
                                 {currentSong.caption}
                             </div>
-                            
                         )}
                     </div>
+                    
+
                     <MessageSection
                         data={_messages}
                         ref={messageRef}
