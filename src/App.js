@@ -62,7 +62,7 @@ function App() {
                         >
                             <SwiperSlide>
                                 <img
-                                    src="/images/photo1.jpg"
+                                    src= "/images/photo1.jpg"
                                     alt="Memory 1"
                                     className="rounded-lg w-full"
                                 />
