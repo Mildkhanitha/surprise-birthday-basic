@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/surprise-birthday-basic/static/css/main.f9698419.css",
+    "main.js": "/surprise-birthday-basic/static/js/main.e6619b8c.js",
+    "static/js/453.8eda42c5.chunk.js": "/surprise-birthday-basic/static/js/453.8eda42c5.chunk.js",
+    "static/media/1.png": "/surprise-birthday-basic/static/media/1.6017e01ceb93fde91d57.png",
+    "index.html": "/surprise-birthday-basic/index.html",
+    "main.f9698419.css.map": "/surprise-birthday-basic/static/css/main.f9698419.css.map",
+    "main.e6619b8c.js.map": "/surprise-birthday-basic/static/js/main.e6619b8c.js.map",
+    "453.8eda42c5.chunk.js.map": "/surprise-birthday-basic/static/js/453.8eda42c5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f9698419.css",
+    "static/js/main.e6619b8c.js"
+  ]
+}
