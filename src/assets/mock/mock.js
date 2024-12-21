@@ -1,9 +1,7 @@
-import image1 from "../images/1.png";
-import gift1 from "../images/gifts/1.png";
+import images from "../images/photo1.jpg";
 
-export const _albums = image1;
+export const _albums = images;
 
-export const _giftAlbums = gift1;
 
 export const _messages = [
     "งายเด็ก วันนี้ครบรอบที่คบกันมา 4 ปีแล้ว อันนี้เค้าก็ตั้งใจทำมันมาหลายวันแล้ว เเอบอ้วนทำ 55555 ต้องคอยปิดกลัวอ้วนรู้ เค้าอยากให้เป็นเหมือนทบทวนเวลาที่ผ่านมา",
