@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useInView } from "framer-motion";
-import { Header, MessageSection } from "./components/ui";
-import { _messages } from "../src/assets/mock/mock";
+import { Header, MessageSection } from "./components/ui/index.jsx";
+import { _messages } from "../src/assets/mock/mock.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
