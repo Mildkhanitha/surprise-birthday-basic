@@ -2,7 +2,7 @@
     "name": "surprise_hbd",
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://Mildkhanitha.github.io/surprise-birthday-basic",
+    "homepage": "https://mildkhanitha.github.io/surprise-birthday-basic/",
     "dependencies": {
         "@testing-library/jest-dom": "^5.17.0",
         "@testing-library/react": "^13.4.0",
