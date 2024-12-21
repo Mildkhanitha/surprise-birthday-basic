@@ -1,10 +1,7 @@
-import { _birthdayMessages, _messages } from "../src/assets/mock/mock";
-
 import { useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import { Header, MessageSection } from "./components/ui";
-import { MemoryZone } from "./components/common";
-
+import { _messages } from "../src/assets/mock/mock";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -13,16 +10,11 @@ import { Navigation, Pagination } from "swiper/modules";
 
 function App() {
     const messageRef = useRef(null);
-    const memoryZoneRef = useRef(null);
-
     const isInViewMessageRef = useInView(messageRef, {
         once: true,
         amount: 0.2,
     });
-    const isInViewMemoryZoneRef = useInView(memoryZoneRef, {
-        once: true,
-        amount: 0.2,
-    });
+    
 
     const songs = [
         { title: "คณะขวัญใจ - น่ารักชุบแป้งทอด", src: "/music/song1.mp3", caption: "เค้าจีบเธอด้วยเพลงนี้ ยังจำได้ไหม" },
@@ -32,7 +24,7 @@ function App() {
     const [currentSong, setCurrentSong] = useState(songs[0]);
     const audioRef = useRef(null);
 
-    const playSong = async(song) => {
+    const playSong = async (song) => {
         setCurrentSong(song);
         if (audioRef.current) {
             try {
@@ -50,7 +42,7 @@ function App() {
         <div>
             <div className="aura" />
             <div className="flex justify-center h-auto overflow-y-auto aura">
-                <div className="flex flex-col items-center max-w-[350px] py-12 gap-16 relative ">
+                <div className="flex flex-col items-center max-w-[350px] py-12 gap-16 relative">
                     <Header
                         content={{
                             title: "Happy Anniversary",
@@ -85,7 +77,7 @@ function App() {
                                     className="rounded-lg w-full"
                                 />
                                 <p className="text-center mt-2 text-gray-600">
-                                    อันนี้ก็ช่วงเเรกตอนปฐมนิเทศ มีเป็นเฟรชชี่น้องใหม่
+                                    อันนี้ก็ช่วงเเรกตอนปฐมนิเทศ เป็นเฟรชชี่น้องใหม่
                                 </p>
                             </SwiperSlide>
                             <SwiperSlide>
@@ -166,22 +158,15 @@ function App() {
                             <div className="mt-2 text-sm text-gray-500 italic">
                                 {currentSong.caption}
                             </div>
+                            
                         )}
                     </div>
-
                     <MessageSection
                         data={_messages}
                         ref={messageRef}
                         isInView={isInViewMessageRef}
                     />
-                    <MemoryZone
-                        ref={memoryZoneRef}
-                        isInView={isInViewMemoryZoneRef}
-                        data={_birthdayMessages}
-                    />
-                    <div className={`pb-20 font-bold text-[#f78da4] text-3xl`}>
-                        Captions 💕
-                    </div>
+                    
                 </div>
             </div>
         </div>
